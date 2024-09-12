@@ -1,0 +1,26 @@
+pipeline {
+    agent any
+    stages {
+        stage('Pull') {
+            steps {
+                git 'https://github.com/shubhamkalsait/studentapp-ui.git'
+            }
+        }
+        stage('Build') {
+            steps {
+                sh '/opt/maven/bin/mvn mvn clean package'
+            }
+        }
+        stage('Test') {
+            steps {
+                sh 'mvn sonar:sonar   -Dsonar.projectKey=studentapp   -Dsonar.host.url=http://65.2.29.47:9000   -Dsonar.login=00c12016331e0334a725e6a43604bff08ae83bc1'           
+            }
+        }
+        stage('Deploy') {
+            steps {
+                echo 'deploy success'
+            }
+    }
+}
+
+}
